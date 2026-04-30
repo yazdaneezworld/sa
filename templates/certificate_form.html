@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-8 border rounded-xl shadow-md">
+    <div class="flex justify-between items-center mb-6 border-b pb-4">
+        <h2 class="text-2xl font-bold text-gray-800">📄 إصدار الشهادة الصحية</h2>
+        <a href="{{ url_for('dashboard') }}" class="text-blue-600 hover:text-blue-800 text-sm">← العودة للرئيسية</a>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <div class="col-span-2 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <label class="block text-gray-700 text-sm font-bold mb-1">نوع الشهادة الصحية <span class="text-red-500">*</span></label>
+            <select class="border border-blue-300 rounded-lg w-full py-2.5 px-3 text-blue-800 font-bold focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="cert_type" id="cert_type" required onchange="toggleFields()">
+                <option value="1">المدينة المنورة</option>
+                <option value="2">العاصمة المقدسة (مكة)</option>
+                <option value="3">الشهادة الصحية الموحدة</option>
+                <option value="4">منطقة الرياض</option>
+            </select>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">رقم الشهادة الصحية <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="cert_number" type="text" placeholder="رقم الشهادة" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">رقم الهوية <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="id_number" type="text" pattern="[0-9]+" title="أرقام فقط" placeholder="رقم الهوية / الإقامة" required>
+        </div>
+
+        <div class="col-span-2">
+            <label class="block text-gray-700 text-sm font-bold mb-1">الاسم / اسم العامل <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="name" type="text" placeholder="الاسم الكامل" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">الجنسية <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="nationality" type="text" placeholder="مثال: يمني" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">المهنة <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="profession" type="text" placeholder="مثال: عامل مطعم" required>
+        </div>
+
+        <!-- Conditional: Gender (Riyadh only) -->
+        <div class="col-span-2 md:col-span-1" id="gender_div" style="display:none">
+            <label class="block text-gray-700 text-sm font-bold mb-1">الجنس</label>
+            <select class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="gender">
+                <option value="">-- اختر --</option>
+                <option value="ذكر">ذكر</option>
+                <option value="أنثى">أنثى</option>
+            </select>
+        </div>
+
+        <!-- Conditional: Place of Issue (Riyadh only) -->
+        <div class="col-span-2 md:col-span-1" id="place_of_issue_div" style="display:none">
+            <label class="block text-gray-700 text-sm font-bold mb-1">مكان الإصدار</label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="place_of_issue" type="text" value="أمانة منطقة الرياض">
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1" id="issue_date_label">تاريخ إصدار الشهادة <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="issue_date" id="issue_date" type="date" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1" id="expiry_date_label">تاريخ انتهاء الشهادة <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="expiry_date" id="expiry_date" type="date" required>
+        </div>
+
+        <!-- Conditional: Edu Program (non-Riyadh) -->
+        <div class="col-span-2 md:col-span-1" id="edu_program_type_div">
+            <label class="block text-gray-700 text-sm font-bold mb-1">نوع البرنامج التثقيفي</label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="edu_program_type" type="text" value="منشآت الغذاء">
+        </div>
+
+        <div class="col-span-2 md:col-span-1" id="edu_program_expiry_div">
+            <label class="block text-gray-700 text-sm font-bold mb-1">تاريخ انتهاء البرنامج التثقيفي</label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="edu_program_expiry" type="date">
+        </div>
+
+        <div class="col-span-2 border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50">
+            <label class="block text-gray-700 text-sm font-bold mb-2">📷 صورة المستفيد (خلفية بيضاء) <span class="text-red-500">*</span></label>
+            <input class="w-full text-gray-700 text-sm" type="file" name="photo" accept="image/*" required>
+        </div>
+
+        <div class="col-span-2">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg w-full text-lg transition" type="submit">
+                ✅ حفظ وإصدار الشهادة الصحية
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+function toggleFields() {
+    var type = document.getElementById("cert_type").value;
+    var genderDiv = document.getElementById("gender_div");
+    var placeDiv = document.getElementById("place_of_issue_div");
+    var eduTypeDiv = document.getElementById("edu_program_type_div");
+    var eduExpiryDiv = document.getElementById("edu_program_expiry_div");
+    var issueLbl = document.getElementById("issue_date_label");
+    var expiryLbl = document.getElementById("expiry_date_label");
+
+    issueLbl.innerHTML = 'تاريخ إصدار الشهادة <span class="text-red-500">*</span>';
+    expiryLbl.innerHTML = 'تاريخ انتهاء الشهادة <span class="text-red-500">*</span>';
+
+    if (type === "4") {
+        genderDiv.style.display = "block";
+        placeDiv.style.display = "block";
+        eduTypeDiv.style.display = "none";
+        eduExpiryDiv.style.display = "none";
+        expiryLbl.innerHTML = 'نهاية الصلاحية <span class="text-red-500">*</span>';
+    } else {
+        genderDiv.style.display = "none";
+        placeDiv.style.display = "none";
+        eduTypeDiv.style.display = "block";
+        eduExpiryDiv.style.display = "block";
+    }
+}
+window.addEventListener('DOMContentLoaded', toggleFields);
+</script>
+{% endblock %}

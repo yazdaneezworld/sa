@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-16 bg-white p-8 border rounded-lg shadow-md">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-gray-800">تسجيل الدخول للموظفين</h2>
+        <p class="text-gray-600 mt-2">الرجاء إدخال بيانات الاعتماد الخاصة بك</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                اسم المستخدم
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" required>
+        </div>
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                كلمة المرور
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" required>
+        </div>
+        <div class="flex items-center justify-between">
+            <button class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="submit">
+                دخول
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

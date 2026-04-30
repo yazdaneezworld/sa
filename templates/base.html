@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إصدار الوثائق الرسمية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f0f4f8; }
+        .nav-link { transition: background 0.2s; }
+        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <nav class="bg-gradient-to-l from-blue-900 to-blue-700 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="{{ url_for('dashboard') }}" class="font-bold text-xl tracking-wide">
+                    🏛️ نظام إصدار الوثائق الرسمية
+                </a>
+                <div class="flex items-center gap-1">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('dashboard') }}" class="nav-link px-3 py-2 rounded-md text-sm hover:bg-blue-600">الرئيسية</a>
+                    <a href="{{ url_for('permits_list') }}" class="nav-link px-3 py-2 rounded-md text-sm hover:bg-blue-600">📋 التصاريح</a>
+                    <a href="{{ url_for('certificates_list') }}" class="nav-link px-3 py-2 rounded-md text-sm hover:bg-blue-600">📄 الشهادات</a>
+                    <a href="{{ url_for('new_permit') }}" class="nav-link px-3 py-2 rounded-md text-sm bg-green-600 hover:bg-green-500 mr-2">+ تصريح جديد</a>
+                    <a href="{{ url_for('new_certificate') }}" class="nav-link px-3 py-2 rounded-md text-sm bg-indigo-500 hover:bg-indigo-400">+ شهادة جديدة</a>
+                    <a href="{{ url_for('logout') }}" class="nav-link px-3 py-2 rounded-md text-sm text-red-200 hover:bg-red-700 mr-2">خروج</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mb-4 px-4 py-3 rounded-lg border
+                        {% if category == 'success' %}bg-green-50 border-green-400 text-green-800
+                        {% else %}bg-red-50 border-red-400 text-red-800{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

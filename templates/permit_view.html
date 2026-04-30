@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تصريح دخول مكة المكرمة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: #e5e7eb;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .no-print {
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-green {
+            background-color: #16a34a;
+        }
+
+        .permit-container {
+            width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
+            background-color: white;
+            padding: 15mm;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .content-box {
+            border: 2px solid #333;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 2px solid #333;
+        }
+
+        .header-left, .header-right {
+            width: 25%;
+            text-align: center;
+        }
+
+        .header-center {
+            width: 50%;
+            text-align: center;
+        }
+
+        .photo {
+            width: 3.5cm;
+            height: 4.5cm;
+            border: 1px solid #000;
+            object-fit: cover;
+        }
+
+        .logo {
+            max-width: 120px;
+            max-height: 120px;
+        }
+
+        .title-text {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        /* Table Section */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            border: 1px solid #333;
+            padding: 8px;
+        }
+
+        .label-cell {
+            background-color: #f9f9f9;
+            width: 25%;
+            color: #333;
+        }
+
+        .value-cell {
+            width: 75%;
+        }
+
+        .split-row td {
+            width: 25%;
+        }
+
+        .gap-row td {
+            border-left: none;
+            border-right: none;
+            padding: 5px;
+            background-color: white;
+        }
+
+        /* Footer Section */
+        .footer-box {
+            border: 2px solid #333;
+            margin: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .instructions {
+            width: 80%;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.8;
+            padding-right: 10px;
+        }
+
+        .instructions ul {
+            list-style-type: decimal;
+            margin: 0;
+            padding-right: 20px;
+        }
+
+        .qr-code {
+            width: 2.5cm;
+            height: 2.5cm;
+        }
+
+        .print-date {
+            text-align: left;
+            font-size: 12px;
+            padding: 5px 15px;
+            font-weight: bold;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            .no-print {
+                display: none;
+            }
+            .permit-container {
+                box-shadow: none;
+                width: 100%;
+                height: 100%;
+                padding: 10mm;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print">
+        <a href="{{ url_for('dashboard') }}" class="btn">العودة للرئيسية</a>
+        <button onclick="window.print()" class="btn btn-green">طباعة / حفظ كـ PDF</button>
+    </div>
+
+    <div class="permit-container">
+        <div class="content-box">
+            
+            <!-- Header -->
+            <div class="header">
+                <div class="header-right">
+                    <!-- Replace with actual logo image later -->
+                    <div style="font-weight:bold; font-size:16px; margin-bottom:5px;">المملكة العربية السعودية<br>وزارة الداخلية</div>
+                    <img src="{{ url_for('static', filename='images/vision2030.png') }}" alt="Vision 2030" class="logo" style="max-height: 60px;" onerror="this.style.display='none'">
+                </div>
+                
+                <div class="header-center">
+                    <img src="{{ url_for('static', filename='images/jawazat.png') }}" alt="Jawazat" class="logo" onerror="this.style.display='none'">
+                    <div class="title-text">
+                        تصريح دخول مكة المكرمة<br>
+                        لموسم حج ( 1447 هـ )<br>
+                        غير مصرح لحامله أداء فريضة الحج
+                    </div>
+                </div>
+                
+                <div class="header-left">
+                    {% if permit.photo_path %}
+                        <img src="{{ url_for('static', filename='uploads/' + permit.photo_path) }}" alt="Photo" class="photo">
+                    {% else %}
+                        <div class="photo"></div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <table>
+                <tr>
+                    <td class="label-cell">رقم التصريح</td>
+                    <td class="value-cell" colspan="3">{{ permit.permit_number }}</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">اسم حامل التصريح</td>
+                    <td class="value-cell" colspan="3">{{ permit.name }}</td>
+                </tr>
+                <tr class="split-row">
+                    <td class="label-cell">تاريخ اصدار التصريح</td>
+                    <td>{{ permit.issue_date }}</td>
+                    <td class="label-cell">تاريخ انتهاء التصريح</td>
+                    <td>{{ permit.expiry_date }}</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">رقم الهوية</td>
+                    <td class="value-cell" colspan="3">{{ permit.id_number }}</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">الجنسية</td>
+                    <td class="value-cell" colspan="3">{{ permit.nationality }}</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">الجنس</td>
+                    <td class="value-cell" colspan="3">{{ permit.gender }}</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">اسم الشركة/المؤسسة</td>
+                    <td class="value-cell" colspan="3">{{ permit.company }}</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">جهة الموافقة</td>
+                    <td class="value-cell" colspan="3">{{ permit.authority }}</td>
+                </tr>
+                
+                <tr class="gap-row"><td colspan="4"></td></tr>
+                
+                <tr>
+                    <td class="label-cell">غرض التصريح</td>
+                    <td class="value-cell" colspan="3">{{ permit.purpose }}</td>
+                </tr>
+                <tr>
+                    <td class="label-cell" style="padding: 15px;">وصف غرض التصريح</td>
+                    <td class="value-cell" colspan="3">{{ permit.purpose_desc }}</td>
+                </tr>
+            </table>
+
+            <!-- Footer Box -->
+            <div style="flex-grow: 1;"></div> <!-- Spacer -->
+            
+            <div class="footer-box">
+                <div class="instructions">
+                    <div style="text-decoration: underline; margin-bottom: 5px;">التعليمات:</div>
+                    <ul>
+                        <li>يجب إلصاق صورة حامل التصريح 4×6 (في حال عدم وجودها آلياً) ووضع ختم المنشأة عليها.</li>
+                        <li>تتعهد الشركة / المؤسسة بعدم السماح لحامل هذا التصريح بأداء فريضة الحج.</li>
+                        <li>يجب إبراز تصريح التنقل والهوية لدى النقاط الأمنية.</li>
+                    </ul>
+                </div>
+                <div class="qr-container">
+                    <img src="{{ url_for('static', filename='qrcodes/' + permit.qr_path) }}" alt="QR Code" class="qr-code">
+                </div>
+            </div>
+            
+            <div class="print-date">
+                تاريخ الطباعة: <span id="currentDate"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        const dateObj = new Date();
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        document.getElementById('currentDate').textContent = `${year}-${month}-${day}`;
+    </script>
+</body>
+</html>

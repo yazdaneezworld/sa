@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Stats Cards -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-xl shadow p-5 border-r-4 border-green-500 flex items-center gap-4">
+        <div class="text-4xl">📋</div>
+        <div>
+            <div class="text-3xl font-bold text-green-700">{{ total_permits }}</div>
+            <div class="text-gray-500 text-sm">إجمالي التصاريح</div>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-5 border-r-4 border-blue-500 flex items-center gap-4">
+        <div class="text-4xl">📄</div>
+        <div>
+            <div class="text-3xl font-bold text-blue-700">{{ total_certs }}</div>
+            <div class="text-gray-500 text-sm">إجمالي الشهادات الصحية</div>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-5 border-r-4 border-purple-500 flex items-center gap-4">
+        <div class="text-4xl">🕌</div>
+        <div>
+            <div class="text-3xl font-bold text-purple-700">{{ cert_type_counts[1] + cert_type_counts[2] }}</div>
+            <div class="text-gray-500 text-sm">مدينة + مكة</div>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-5 border-r-4 border-orange-500 flex items-center gap-4">
+        <div class="text-4xl">🏙️</div>
+        <div>
+            <div class="text-3xl font-bold text-orange-700">{{ cert_type_counts[3] + cert_type_counts[4] }}</div>
+            <div class="text-gray-500 text-sm">موحدة + الرياض</div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Action Buttons -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="bg-white rounded-xl shadow-md border-t-4 border-green-600 p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-2 flex items-center gap-2">📋 تصاريح دخول مكة المكرمة</h2>
+        <p class="text-gray-500 text-sm mb-4">إصدار وإدارة تصاريح دخول العاصمة المقدسة لموسم الحج.</p>
+        <div class="flex gap-3">
+            <a href="{{ url_for('new_permit') }}" class="flex-1 text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition">+ إنشاء تصريح</a>
+            <a href="{{ url_for('permits_list') }}" class="flex-1 text-center border border-green-600 text-green-700 hover:bg-green-50 font-bold py-2 px-4 rounded-lg transition">عرض الكل</a>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl shadow-md border-t-4 border-blue-600 p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-2 flex items-center gap-2">📄 الشهادات الصحية</h2>
+        <p class="text-gray-500 text-sm mb-4">إصدار الشهادات الصحية (المدينة، مكة، الرياض، الموحدة).</p>
+        <div class="flex gap-3">
+            <a href="{{ url_for('new_certificate') }}" class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">+ إنشاء شهادة</a>
+            <a href="{{ url_for('certificates_list') }}" class="flex-1 text-center border border-blue-600 text-blue-700 hover:bg-blue-50 font-bold py-2 px-4 rounded-lg transition">عرض الكل</a>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Recent Permits -->
+    <div class="bg-white rounded-xl shadow-md p-6">
+        <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">⏱️ آخر التصاريح المُصدرة</h3>
+        {% if recent_permits %}
+        <ul class="divide-y divide-gray-100">
+            {% for p in recent_permits %}
+            <li class="py-3 flex justify-between items-center">
+                <div>
+                    <div class="font-medium text-gray-800">{{ p.name }}</div>
+                    <div class="text-xs text-gray-400">رقم: {{ p.permit_number }} | {{ p.created_at.strftime('%Y-%m-%d') }}</div>
+                </div>
+                <a href="{{ url_for('view_permit', uuid=p.uuid) }}" class="text-blue-600 text-sm hover:underline">عرض</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('permits_list') }}" class="block text-center text-green-600 text-sm mt-4 hover:underline">عرض جميع التصاريح ←</a>
+        {% else %}
+        <p class="text-gray-400 text-sm text-center py-6">لا توجد تصاريح بعد</p>
+        {% endif %}
+    </div>
+
+    <!-- Recent Certificates -->
+    <div class="bg-white rounded-xl shadow-md p-6">
+        <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">⏱️ آخر الشهادات الصحية المُصدرة</h3>
+        {% set cert_names = {1: 'المدينة المنورة', 2: 'مكة المكرمة', 3: 'الموحدة', 4: 'الرياض'} %}
+        {% if recent_certs %}
+        <ul class="divide-y divide-gray-100">
+            {% for c in recent_certs %}
+            <li class="py-3 flex justify-between items-center">
+                <div>
+                    <div class="font-medium text-gray-800">{{ c.name }}</div>
+                    <div class="text-xs text-gray-400">{{ cert_names[c.cert_type] }} | {{ c.created_at.strftime('%Y-%m-%d') }}</div>
+                </div>
+                <a href="{{ url_for('view_certificate', uuid=c.uuid) }}" class="text-blue-600 text-sm hover:underline">عرض</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('certificates_list') }}" class="block text-center text-blue-600 text-sm mt-4 hover:underline">عرض جميع الشهادات ←</a>
+        {% else %}
+        <p class="text-gray-400 text-sm text-center py-6">لا توجد شهادات بعد</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

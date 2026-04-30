@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">📋 قائمة تصاريح دخول مكة المكرمة</h1>
+    <a href="{{ url_for('new_permit') }}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-5 rounded-lg transition">+ إنشاء تصريح جديد</a>
+</div>
+
+<!-- Search -->
+<form method="GET" class="mb-5 flex gap-2">
+    <input type="text" name="q" value="{{ q }}" placeholder="ابحث بالاسم أو رقم التصريح أو رقم الهوية..."
+        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+    <button type="submit" class="bg-gray-700 text-white px-5 py-2 rounded-lg hover:bg-gray-800 transition">بحث</button>
+    {% if q %}<a href="{{ url_for('permits_list') }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition">مسح</a>{% endif %}
+</form>
+
+{% if permits %}
+<div class="bg-white rounded-xl shadow overflow-hidden">
+    <table class="w-full text-sm">
+        <thead class="bg-green-700 text-white">
+            <tr>
+                <th class="py-3 px-4 text-right">#</th>
+                <th class="py-3 px-4 text-right">رقم التصريح</th>
+                <th class="py-3 px-4 text-right">الاسم</th>
+                <th class="py-3 px-4 text-right">رقم الهوية</th>
+                <th class="py-3 px-4 text-right">الجنسية</th>
+                <th class="py-3 px-4 text-right">تاريخ الإصدار</th>
+                <th class="py-3 px-4 text-right">تاريخ الانتهاء</th>
+                <th class="py-3 px-4 text-right">إجراءات</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+            {% for p in permits %}
+            <tr class="hover:bg-gray-50 transition">
+                <td class="py-3 px-4 text-gray-400">{{ loop.index }}</td>
+                <td class="py-3 px-4 font-mono font-bold text-green-700">{{ p.permit_number }}</td>
+                <td class="py-3 px-4 font-medium">{{ p.name }}</td>
+                <td class="py-3 px-4 text-gray-600">{{ p.id_number }}</td>
+                <td class="py-3 px-4 text-gray-600">{{ p.nationality }}</td>
+                <td class="py-3 px-4 text-gray-600">{{ p.issue_date }}</td>
+                <td class="py-3 px-4 text-gray-600">{{ p.expiry_date }}</td>
+                <td class="py-3 px-4">
+                    <div class="flex gap-2">
+                        <a href="{{ url_for('view_permit', uuid=p.uuid) }}" class="text-blue-600 hover:text-blue-800 font-medium">عرض</a>
+                        <form method="POST" action="{{ url_for('delete_permit', uuid=p.uuid) }}" onsubmit="return confirm('هل أنت متأكد من حذف هذا التصريح؟')">
+                            <button type="submit" class="text-red-500 hover:text-red-700 font-medium">حذف</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="bg-gray-50 px-4 py-3 text-sm text-gray-500 border-t">
+        إجمالي النتائج: <strong>{{ permits|length }}</strong> تصريح
+    </div>
+</div>
+{% else %}
+<div class="bg-white rounded-xl shadow p-16 text-center">
+    <div class="text-6xl mb-4">📭</div>
+    <p class="text-gray-400 text-lg">{% if q %}لا توجد نتائج للبحث "{{ q }}"{% else %}لا توجد تصاريح مُصدرة بعد{% endif %}</p>
+    <a href="{{ url_for('new_permit') }}" class="inline-block mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition">إنشاء أول تصريح</a>
+</div>
+{% endif %}
+{% endblock %}

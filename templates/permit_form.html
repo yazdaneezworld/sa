@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white p-8 border rounded-xl shadow-md">
+    <div class="flex justify-between items-center mb-6 border-b pb-4">
+        <h2 class="text-2xl font-bold text-gray-800">📋 إصدار تصريح دخول مكة المكرمة</h2>
+        <a href="{{ url_for('dashboard') }}" class="text-blue-600 hover:text-blue-800 text-sm">← العودة للرئيسية</a>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">رقم التصريح <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="permit_number" type="text" placeholder="مثال: 1234567890" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">رقم الهوية <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="id_number" type="text" pattern="[0-9]+" title="أرقام فقط" placeholder="مثال: 1012345678" required>
+        </div>
+
+        <div class="col-span-2">
+            <label class="block text-gray-700 text-sm font-bold mb-1">اسم حامل التصريح <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="name" type="text" placeholder="الاسم الكامل" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">الجنسية <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="nationality" type="text" placeholder="مثال: سعودي" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">الجنس <span class="text-red-500">*</span></label>
+            <select class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="gender" required>
+                <option value="" disabled selected>-- اختر --</option>
+                <option value="ذكر">ذكر</option>
+                <option value="أنثى">أنثى</option>
+            </select>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">تاريخ إصدار التصريح <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="issue_date" type="date" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">تاريخ انتهاء التصريح <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="expiry_date" type="date" required>
+        </div>
+
+        <div class="col-span-2">
+            <label class="block text-gray-700 text-sm font-bold mb-1">اسم الشركة / المؤسسة <span class="text-red-500">*</span></label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="company" type="text" placeholder="اسم جهة العمل" required>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">جهة الموافقة</label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="authority" type="text" value="المديرية العامة للجوازات">
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+            <label class="block text-gray-700 text-sm font-bold mb-1">غرض التصريح</label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="purpose" type="text" value="عمل موسمي">
+        </div>
+
+        <div class="col-span-2">
+            <label class="block text-gray-700 text-sm font-bold mb-1">وصف غرض التصريح</label>
+            <input class="border border-gray-300 rounded-lg w-full py-2.5 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400" 
+                name="purpose_desc" type="text" value="تصريح دخول مكة للمناطق (أحياء العاصمة المقدسة) فقط">
+        </div>
+
+        <div class="col-span-2 border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50">
+            <label class="block text-gray-700 text-sm font-bold mb-2">📷 صورة المستفيد (خلفية بيضاء) <span class="text-red-500">*</span></label>
+            <input class="w-full text-gray-700 text-sm" type="file" name="photo" accept="image/*" required>
+        </div>
+
+        <div class="col-span-2">
+            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg w-full text-lg transition" type="submit">
+                ✅ حفظ وإصدار التصريح
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
