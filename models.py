@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 db = SQLAlchemy()
 
@@ -20,13 +20,14 @@ class Permit(db.Model):
     id_number = db.Column(db.String(50))
     nationality = db.Column(db.String(50))
     gender = db.Column(db.String(20))
+    dob = db.Column(db.String(20)) # Date of Birth
     company = db.Column(db.String(150))
     authority = db.Column(db.String(100))
     purpose = db.Column(db.String(100))
     purpose_desc = db.Column(db.String(200))
     photo_path = db.Column(db.String(200))
     qr_path = db.Column(db.String(200))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
 class HealthCertificate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,4 +46,4 @@ class HealthCertificate(db.Model):
     place_of_issue = db.Column(db.String(100)) # For Riyadh
     photo_path = db.Column(db.String(200))
     qr_path = db.Column(db.String(200))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))

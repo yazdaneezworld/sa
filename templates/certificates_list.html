@@ -51,6 +51,7 @@
                 <td class="py-3 px-4">
                     <div class="flex gap-2">
                         <a href="{{ url_for('view_certificate', uuid=c.uuid) }}" class="text-blue-600 hover:text-blue-800 font-medium">عرض</a>
+                        <a href="{{ url_for('edit_certificate', uuid=c.uuid) }}" class="text-green-600 hover:text-green-800 font-medium">تعديل</a>
                         <form method="POST" action="{{ url_for('delete_certificate', uuid=c.uuid) }}" onsubmit="return confirm('هل أنت متأكد من حذف هذه الشهادة؟')">
                             <button type="submit" class="text-red-500 hover:text-red-700 font-medium">حذف</button>
                         </form>
