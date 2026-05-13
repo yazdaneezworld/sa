@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <title>تصريح دخول مكة المكرمة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
-
+        
         body {
             font-family: 'Tajawal', Arial, sans-serif;
             background-color: #e5e7eb;
@@ -42,14 +41,13 @@
         }
 
         .permit-container {
-            width: 210mm;
-            /* A4 width */
-            min-height: 297mm;
-            /* A4 height */
-            background-color: white;
+            width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
+            background-color: white !important;
+            background-image: none !important;
             padding: 15mm;
             box-sizing: border-box;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
         }
 
@@ -58,40 +56,27 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            background-image: none !important;
+            background: white !important;
         }
 
         /* Header Section */
         .header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            padding: 10px 15px;
+            align-items: center;
+            padding: 10px;
             border-bottom: 2px solid #333;
         }
 
-        .header-left {
+        .header-left, .header-right {
             width: 25%;
             text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header-right {
-            width: 30%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
         }
 
         .header-center {
-            width: 40%;
+            width: 50%;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .photo {
@@ -101,35 +86,16 @@
             object-fit: cover;
         }
 
-        .logo-jawazat {
-            max-width: 200px;
-            max-height: 200px;
-        }
-
-        .logo-vision {
-            max-width: 200px;
-            max-height: 200px;
+        .logo {
+            max-width: 120px;
+            max-height: 120px;
         }
 
         .title-text {
             font-weight: bold;
-            font-size: 15px;
-            margin-top: 6px;
-            line-height: 1.6;
-            text-align: center;
-        }
-
-        .kingdom-text {
-            font-weight: bold;
-            font-size: 13px;
-            line-height: 1.7;
-            text-align: center;
-            color: #111;
-        }
-
-        .kingdom-text .sub {
-            font-size: 11px;
-            font-weight: normal;
+            font-size: 18px;
+            margin-top: 10px;
+            line-height: 1.4;
         }
 
         /* Table Section */
@@ -209,18 +175,15 @@
                 padding: 0;
                 margin: 0;
             }
-
             .no-print {
                 display: none;
             }
-
             .permit-container {
                 box-shadow: none;
                 width: 100%;
                 height: 100%;
                 padding: 10mm;
             }
-
             @page {
                 size: A4 portrait;
                 margin: 0;
@@ -228,58 +191,41 @@
         }
     </style>
 </head>
-
 <body>
 
     <div class="no-print">
         <a href="{{ url_for('dashboard') }}" class="btn">العودة للرئيسية</a>
-        <button onclick="window.print()" class="btn btn-green">طباعة / حفظ كـ PDF</button>
+        <a href="{{ url_for('edit_permit', uuid=permit.uuid) }}" class="btn" style="background-color: #f59e0b;">تعديل البيانات</a>
+        <button onclick="handlePrint()" class="btn btn-green">طباعة / حفظ كـ PDF</button>
     </div>
 
     <div class="permit-container">
         <div class="content-box">
-
+            
             <!-- Header -->
             <div class="header">
-
-                <!-- اليمين: نص المملكة + شعار رؤية 2030 -->
                 <div class="header-right">
-                    <div class="kingdom-text">
-                        المملكة العربية السعودية<br>
-                        وزارة الداخلية<br>
-                        <span class="sub">المديرية العامة للجوازات</span>
-                    </div>
-                    <!-- شعار رؤية 2030 -->
-                    <img src="{{ url_for('static', filename='images/vision2030.png') }}" alt="Vision 2030"
-                        class="logo-vision"
-                        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Saudi_Vision_2030_logo.svg/320px-Saudi_Vision_2030_logo.svg.png'; this.onerror=null;">
+                    <!-- Replace with actual logo image later -->
+                    <div style="font-weight:bold; font-size:16px; margin-bottom:5px;">المملكة العربية السعودية<br>وزارة الداخلية</div>
+                    <img src="{{ url_for('static', filename='images/vision2030.png') }}" alt="Vision 2030" class="logo" style="max-height: 60px;" onerror="this.style.display='none'">
                 </div>
-
-                <!-- المنتصف: شعار الجوازات فوق النص -->
+                
                 <div class="header-center">
-                    <!-- شعار الجوازات الرئيسي -->
-                    <img src="{{ url_for('static', filename='images/jawazat.png') }}" alt="شعار الجوازات"
-                        class="logo-jawazat"
-                        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Emblem_of_Saudi_Arabia.svg/200px-Emblem_of_Saudi_Arabia.svg.png'; this.onerror=null;">
+                    <img src="{{ url_for('static', filename='images/jawazat.png') }}" alt="Jawazat" class="logo" onerror="this.style.display='none'">
                     <div class="title-text">
                         تصريح دخول مكة المكرمة<br>
                         لموسم حج ( 1447 هـ )<br>
                         غير مصرح لحامله أداء فريضة الحج
                     </div>
                 </div>
-
-                <!-- اليسار: الصورة الشخصية -->
+                
                 <div class="header-left">
                     {% if permit.photo_path %}
-                    <img src="{{ url_for('static', filename='uploads/' + permit.photo_path) }}" alt="Photo"
-                        class="photo">
+                        <img src="{{ url_for('static', filename='uploads/' + permit.photo_path) }}" alt="Photo" class="photo">
                     {% else %}
-                    <div class="photo"
-                        style="display:flex; align-items:center; justify-content:center; color:#999; font-size:12px;">
-                        صورة</div>
+                        <div class="photo"></div>
                     {% endif %}
                 </div>
-
             </div>
 
             <!-- Data Table -->
@@ -318,11 +264,9 @@
                     <td class="label-cell">جهة الموافقة</td>
                     <td class="value-cell" colspan="3">{{ permit.authority }}</td>
                 </tr>
-
-                <tr class="gap-row">
-                    <td colspan="4"></td>
-                </tr>
-
+                
+                <tr class="gap-row"><td colspan="4"></td></tr>
+                
                 <tr>
                     <td class="label-cell">غرض التصريح</td>
                     <td class="value-cell" colspan="3">{{ permit.purpose }}</td>
@@ -335,7 +279,7 @@
 
             <!-- Footer Box -->
             <div style="flex-grow: 1;"></div> <!-- Spacer -->
-
+            
             <div class="footer-box">
                 <div class="instructions">
                     <div style="text-decoration: underline; margin-bottom: 5px;">التعليمات:</div>
@@ -346,11 +290,10 @@
                     </ul>
                 </div>
                 <div class="qr-container">
-                    <img src="{{ url_for('static', filename='qrcodes/' + permit.qr_path) }}" alt="QR Code"
-                        class="qr-code">
+                    <img src="{{ url_for('static', filename='qrcodes/' + permit.qr_path) }}" alt="QR Code" class="qr-code">
                 </div>
             </div>
-
+            
             <div class="print-date">
                 تاريخ الطباعة: <span id="currentDate"></span>
             </div>
@@ -365,7 +308,11 @@
         const month = String(dateObj.getMonth() + 1).padStart(2, '0');
         const day = String(dateObj.getDate()).padStart(2, '0');
         document.getElementById('currentDate').textContent = `${year}-${month}-${day}`;
+
+        function handlePrint() {
+            // Check if styles are loaded or give a tiny delay
+            window.print();
+        }
     </script>
 </body>
-
 </html>

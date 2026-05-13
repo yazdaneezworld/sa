@@ -15,18 +15,18 @@
 <body>
     <nav class="bg-gradient-to-l from-blue-900 to-blue-700 text-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <a href="{{ url_for('dashboard') }}" class="font-bold text-xl tracking-wide">
+            <div class="flex flex-col md:flex-row justify-between items-center py-3 md:h-16">
+                <a href="{{ url_for('dashboard') }}" class="font-bold text-xl tracking-wide mb-2 md:mb-0">
                     🏛️ نظام إصدار الوثائق الرسمية
                 </a>
-                <div class="flex items-center gap-1">
+                <div class="flex flex-wrap justify-center items-center gap-1">
                     {% if current_user.is_authenticated %}
                     <a href="{{ url_for('dashboard') }}" class="nav-link px-3 py-2 rounded-md text-sm hover:bg-blue-600">الرئيسية</a>
                     <a href="{{ url_for('permits_list') }}" class="nav-link px-3 py-2 rounded-md text-sm hover:bg-blue-600">📋 التصاريح</a>
                     <a href="{{ url_for('certificates_list') }}" class="nav-link px-3 py-2 rounded-md text-sm hover:bg-blue-600">📄 الشهادات</a>
-                    <a href="{{ url_for('new_permit') }}" class="nav-link px-3 py-2 rounded-md text-sm bg-green-600 hover:bg-green-500 mr-2">+ تصريح جديد</a>
-                    <a href="{{ url_for('new_certificate') }}" class="nav-link px-3 py-2 rounded-md text-sm bg-indigo-500 hover:bg-indigo-400">+ شهادة جديدة</a>
-                    <a href="{{ url_for('logout') }}" class="nav-link px-3 py-2 rounded-md text-sm text-red-200 hover:bg-red-700 mr-2">خروج</a>
+                    <a href="{{ url_for('new_permit') }}" class="nav-link px-3 py-2 rounded-md text-sm bg-green-600 hover:bg-green-500">+ تصريح</a>
+                    <a href="{{ url_for('new_certificate') }}" class="nav-link px-3 py-2 rounded-md text-sm bg-indigo-500 hover:bg-indigo-400">+ شهادة</a>
+                    <a href="{{ url_for('logout') }}" class="nav-link px-3 py-2 rounded-md text-sm text-red-200 hover:bg-red-700">خروج</a>
                     {% endif %}
                 </div>
             </div>

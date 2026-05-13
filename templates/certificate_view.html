@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <title>الشهادة الصحية</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
-
+        
         body {
             font-family: 'Tajawal', Arial, sans-serif;
             background-color: #e5e7eb;
@@ -46,17 +45,15 @@
             width: 210mm;
             min-height: 297mm;
             background-color: white;
-            padding: 0;
-            /* Full bleed for headers */
+            padding: 0; /* Full bleed for headers */
             box-sizing: border-box;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
         }
 
         .page {
             width: 100%;
-            height: 148.5mm;
-            /* Half A4 height to put both on one page */
+            height: 148.5mm; /* Half A4 height to put both on one page */
             position: relative;
             box-sizing: border-box;
             overflow: hidden;
@@ -64,81 +61,30 @@
         }
 
         @media print {
-            body {
-                background-color: white;
-                padding: 0;
-                margin: 0;
-            }
-
-            .no-print {
-                display: none;
-            }
-
-            .cert-container {
-                box-shadow: none;
-                width: 100%;
-                height: 100%;
-                border: none;
-            }
-
-            .page {
-                border-bottom: none;
-                height: auto;
-                padding-bottom: 20mm;
-                page-break-after: always;
-            }
-
-            .page:last-child {
-                page-break-after: auto;
-            }
-
-            @page {
-                size: A4 landscape;
-                margin: 0;
-            }
-
-            /* Often these cards are printed landscape or 2 per page */
+            body { background-color: white; padding: 0; margin: 0; }
+            .no-print { display: none; }
+            .cert-container { box-shadow: none; width: 100%; height: 100%; border: none; }
+            .page { border-bottom: none; height: auto; padding-bottom: 20mm; page-break-after: always; }
+            .page:last-child { page-break-after: auto; }
+            @page { size: A4 landscape; margin: 0; } /* Often these cards are printed landscape or 2 per page */
         }
 
         /* --- Type 1, 2, 3 Layout (Madinah, Makkah, Unified) --- */
         .t1-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            padding: 0;
-            background-color: white;
-            height: 100px;
-        }
-
-        .t1-title {
-            padding: 15px 40px;
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            display: inline-block;
-        }
-
-        .bg-madinah {
-            background-color: #0b7a75;
-        }
-
-        .bg-makkah {
-            background-color: #8cc63f;
-        }
-
-        .bg-unified {
-            background-color: #0b7a75;
-        }
-
-        .t1-logos {
-            padding: 10px 20px;
-            display: flex;
             align-items: center;
+            height: 80px;
+            padding: 0 20px;
+            color: white;
         }
-
-        .t1-logos img {
-            height: 75px;
-        }
+        .bg-madinah { background-color: #0b7a75; }
+        .bg-makkah { background-color: #8cc63f; }
+        .bg-unified { background-color: #0b7a75; }
+        
+        .t1-title { font-size: 28px; font-weight: bold; }
+        .t1-logos { display: flex; gap: 15px; background: white; padding: 5px 15px; border-radius: 0 0 10px 10px; align-items: center;}
+        .t1-logos img { height: 50px; }
 
         .t1-body {
             display: flex;
@@ -222,68 +168,58 @@
         .t4-page {
             padding: 30px;
         }
-
         .t4-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
         }
-
         .t4-title-area {
             text-align: center;
             width: 100%;
         }
-
         .t4-title {
             color: #008f5d;
             font-size: 32px;
             font-weight: bold;
             margin: 10px 0;
         }
-
         .t4-top-center {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin-bottom: 20px;
         }
-
         .t4-photo {
             width: 120px;
             height: 140px;
             object-fit: cover;
             border: 1px solid #ccc;
         }
-
         .t4-qr {
             width: 140px;
             height: 140px;
         }
-
+        
         .t4-body-container {
             display: flex;
             gap: 20px;
         }
-
         .t4-box {
             border: 1px solid #ccc;
             border-radius: 10px;
             padding: 15px;
             width: 50%;
         }
-
         .t4-row {
             display: flex;
             margin-bottom: 15px;
             font-size: 16px;
         }
-
         .t4-label {
             font-weight: bold;
             color: #000;
             width: 40%;
         }
-
         .t4-value {
             color: #555;
             width: 60%;
@@ -291,12 +227,10 @@
 
         /* Back side Instructions */
         .back-page {
-            background-color: #568c85;
-            /* Default fallback */
+            background-color: #568c85; /* Default fallback */
             color: white;
             padding: 40px;
         }
-
         .back-title {
             font-size: 36px;
             font-weight: bold;
@@ -305,28 +239,24 @@
             align-items: center;
             gap: 20px;
         }
-
         .back-list {
-            font-size: 24px;
-            line-height: 1.8;
+            font-size: 20px;
+            line-height: 2;
             list-style: none;
             padding: 0;
         }
-
         .back-list li {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             position: relative;
-            padding-right: 45px;
-            font-weight: 500;
+            padding-right: 35px;
         }
-
         .back-list li::before {
-            content: '❂'; 
+            content: '⚙'; /* Just a placeholder for the star icon */
             position: absolute;
             right: 0;
-            top: 5px;
+            top: 0;
             color: white;
-            font-size: 30px;
+            font-size: 24px;
         }
 
         /* Riyadh Back side */
@@ -335,197 +265,161 @@
             color: #333;
             padding: 40px;
         }
-
         .t4-back-list {
             font-size: 18px;
             line-height: 2;
             list-style: none;
             padding: 0;
         }
-
         .t4-back-list li {
             margin-bottom: 15px;
         }
-
         .t4-back-list li::before {
             content: '• ';
             color: #555;
             font-weight: bold;
         }
+
     </style>
 </head>
-
 <body>
 
     <div class="no-print">
         <a href="{{ url_for('dashboard') }}" class="btn">العودة للرئيسية</a>
-        <button onclick="window.print()" class="btn btn-green">طباعة / حفظ كـ PDF</button>
+        <a href="{{ url_for('edit_certificate', uuid=cert.uuid) }}" class="btn" style="background-color: #f59e0b;">تعديل البيانات</a>
+        <button onclick="handlePrint()" class="btn btn-green">طباعة / حفظ كـ PDF</button>
     </div>
 
     <div class="cert-container">
 
         {% if cert.cert_type in [1, 2, 3] %}
-        <!-- Front Page for Madinah, Makkah, Unified -->
-        <div class="page">
-            {% set bg_class = 'bg-madinah' if cert.cert_type == 1 else ('bg-makkah' if cert.cert_type == 2 else
-            'bg-unified') %}
-            {% set title = 'الشهادة الصحية' if cert.cert_type == 1 else ('شهادة صحية' if cert.cert_type == 2 else
-            'الشهادة الصحية الموحدة') %}
-
-            <div class="t1-header">
-                <div class="t1-logos">
-                    <img src="{{ url_for('static', filename='images/minilogos.png') }}" alt="Logos">
-                </div>
-                <div class="t1-title {{ bg_class }}">{{ title }}</div>
-            </div>
-
-            <div class="t1-body">
-                <div class="t1-content">
-                    <div class="t1-name" {% if cert.cert_type==2 %} style="color: #8cc63f;" {% endif %}>{{ cert.name }}
-                    </div>
-
-                    <div class="t1-grid">
-                        <div class="t1-label">رقم الهوية</div>
-                        <div class="t1-value">{{ cert.id_number }}</div>
-                        <div class="t1-label">الجنسية</div>
-                        <div class="t1-value">{{ cert.nationality }}</div>
-
-                        <div class="t1-label">رقم الشهادة الصحية</div>
-                        <div class="t1-value">{{ cert.cert_number }}</div>
-                        <div class="t1-label">المهنة</div>
-                        <div class="t1-value">{{ cert.profession }}</div>
-
-                        <div class="t1-label">تاريخ إصدار الشهادة الصحية</div>
-                        <div class="t1-value">{{ cert.issue_date }}</div>
-                        <div class="t1-label">تاريخ نهاية الشهادة الصحية</div>
-                        <div class="t1-value">{{ cert.expiry_date }}</div>
-
-                        <div class="t1-label">نوع البرنامج التثقيفي</div>
-                        <div class="t1-value">{{ cert.edu_program_type }}</div>
-                        <div class="t1-label">تاريخ انتهاء البرنامج التثقيفي</div>
-                        <div class="t1-value">{{ cert.edu_program_expiry }}</div>
+            <!-- Front Page for Madinah, Makkah, Unified -->
+            <div class="page">
+                {% set bg_class = 'bg-madinah' if cert.cert_type == 1 else ('bg-makkah' if cert.cert_type == 2 else 'bg-unified') %}
+                {% set title = 'الشهادة الصحية' if cert.cert_type == 1 else ('شهادة صحية' if cert.cert_type == 2 else 'الشهادة الصحية الموحدة') %}
+                
+                <div class="t1-header {{ bg_class }}">
+                    <div class="t1-title">{{ title }}</div>
+                    <div class="t1-logos">
+                        <!-- Placeholder for logos -->
+                        <div style="color:black; font-size:12px; font-weight:bold;">وزارة الشؤون البلدية والقروية والإسكان</div>
                     </div>
                 </div>
 
-                <div class="t1-sidebar">
-                    {% if cert.photo_path %}
-                    <img src="{{ url_for('static', filename='uploads/' + cert.photo_path) }}" class="t1-photo"
-                        alt="Photo">
-                    {% else %}
-                    <div class="t1-photo"></div>
-                    {% endif %}
-                    <img src="{{ url_for('static', filename='qrcodes/' + cert.qr_path) }}" class="t1-qr" alt="QR">
+                <div class="t1-body">
+                    <div class="t1-sidebar">
+                        {% if cert.photo_path %}
+                            <img src="{{ url_for('static', filename='uploads/' + cert.photo_path) }}" class="t1-photo" alt="Photo">
+                        {% else %}
+                            <div class="t1-photo"></div>
+                        {% endif %}
+                        <img src="{{ url_for('static', filename='qrcodes/' + cert.qr_path) }}" class="t1-qr" alt="QR">
+                    </div>
+
+                    <div class="t1-content">
+                        <div class="t1-name" {% if cert.cert_type == 2 %} style="color: #8cc63f;" {% endif %}>{{ cert.name }}</div>
+                        
+                        <div class="t1-grid">
+                            <div class="t1-label">رقم الهوية</div>
+                            <div class="t1-value">{{ cert.id_number }}</div>
+                            <div class="t1-label">الجنسية</div>
+                            <div class="t1-value">{{ cert.nationality }}</div>
+
+                            <div class="t1-label">رقم الشهادة الصحية</div>
+                            <div class="t1-value">{{ cert.cert_number }}</div>
+                            <div class="t1-label">المهنة</div>
+                            <div class="t1-value">{{ cert.profession }}</div>
+
+                            <div class="t1-label">تاريخ إصدار الشهادة الصحية</div>
+                            <div class="t1-value">{{ cert.issue_date }}</div>
+                            <div class="t1-label">تاريخ نهاية الشهادة الصحية</div>
+                            <div class="t1-value">{{ cert.expiry_date }}</div>
+
+                            <div class="t1-label">نوع البرنامج التثقيفي</div>
+                            <div class="t1-value">{{ cert.edu_program_type }}</div>
+                            <div class="t1-label">تاريخ انتهاء البرنامج التثقيفي</div>
+                            <div class="t1-value">{{ cert.edu_program_expiry }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="t1-footer">
+                    <div>📞 199040 مركز العناية بالعملاء</div>
+                    <div>🌐 www.balady.gov.sa</div>
+                    <div>🐦 سعودي مومرا</div>
                 </div>
             </div>
 
-            <div class="t1-footer">
-                <div>📞 199040 مركز العناية بالعملاء</div>
-                <div>🌐 www.balady.gov.sa</div>
-                <div>🐦 سعودي مومرا</div>
-            </div>
-        </div>
-
-        <!-- Back Page for Madinah, Makkah, Unified -->
-        <div class="page back-page" {% if cert.cert_type==2 %} style="background-color: #8cc63f;" {% endif %}>
-            <div class="t1-header" style="background-color: transparent; border-bottom: none; height: 120px;">
-                <div class="t1-logos">
-                    <img src="{{ url_for('static', filename='images/minilogos.png') }}" alt="Logos" style="filter: brightness(0) invert(1);">
-                </div>
-                <div class="back-title" style="margin-bottom: 0; padding: 15px 40px; font-size: 50px;">
+            <!-- Back Page for Madinah, Makkah, Unified -->
+            <div class="page back-page" {% if cert.cert_type == 2 %} style="background-color: #8cc63f;" {% endif %}>
+                <div class="back-title">
                     تعليمات وإرشادات
                 </div>
+                <ul class="back-list">
+                    <li>شهادة صحية تجدد سنوياً.</li>
+                    <li>يسمح لحامل الشهادة الصحية بالعمل في منشآت الغذاء أو الصحة العامة وفق المهنة المسموح بها نظاماً.</li>
+                    <li>يلزم حامل هذه الشهادة بإجراء فحص طبي عند عودته من الخارج قبل البدء بممارسة العمل.</li>
+                    <li>لا تعتبر الشهادة إثبات هوية.</li>
+                </ul>
             </div>
-
-            <ul class="back-list" style="margin-top: 30px;">
-                <li>شهادة صحية تجدد سنوياً.</li>
-                <li>هذه الشهادة لا تخول لك العمل في تداول الغذاء أو أعمال تتعلق بالصحة العامة.</li>
-                <li>إذا رغبت العمل في تداول الغذاء أو أعمال الصحة العامة فأنت ملزم باجتياز اختبار التثقيف الصحي وفق الإجراءات المنظمة.</li>
-                <li>لا تعتبر الشهادة إثبات هوية.</li>
-            </ul>
-        </div>
 
         {% elif cert.cert_type == 4 %}
-        <!-- Front Page for Riyadh -->
-        <div class="page t4-page">
-            <div class="t4-header">
-                <div style="font-size:24px; font-weight:bold; color:#008f5d;">أمانة منطقة الرياض<br><span
-                        style="font-size:14px;">RIYADH REGION MUNICIPALITY</span></div>
-                <div style="width: 80px; height: 80px; background-color:#008f5d; border-radius:50%;"></div>
-                <!-- Logo placeholder -->
-            </div>
-
-            <div class="t4-title-area">
-                <div class="t4-top-center">
-                    {% if cert.photo_path %}
-                    <img src="{{ url_for('static', filename='uploads/' + cert.photo_path) }}" class="t4-photo"
-                        alt="Photo">
-                    {% else %}
-                    <div class="t4-photo"></div>
-                    {% endif %}
-                    <img src="{{ url_for('static', filename='qrcodes/' + cert.qr_path) }}" class="t4-qr" alt="QR">
-                </div>
-                <div class="t4-title">شهادة صحية</div>
-            </div>
-
-            <div class="t4-body-container">
-                <!-- Left Box (Right in RTL) -->
-                <div class="t4-box">
-                    <div class="t4-row">
-                        <div class="t4-label">رقم الشهادة</div>
-                        <div class="t4-value">{{ cert.cert_number }}</div>
-                    </div>
-                    <div class="t4-row">
-                        <div class="t4-label">مكان الإصدار</div>
-                        <div class="t4-value">{{ cert.place_of_issue }}</div>
-                    </div>
-                    <div class="t4-row">
-                        <div class="t4-label">نهاية الصلاحية</div>
-                        <div class="t4-value">{{ cert.expiry_date }}</div>
-                    </div>
+            <!-- Front Page for Riyadh -->
+            <div class="page t4-page">
+                <div class="t4-header">
+                    <div style="font-size:24px; font-weight:bold; color:#008f5d;">أمانة منطقة الرياض<br><span style="font-size:14px;">RIYADH REGION MUNICIPALITY</span></div>
+                    <div style="width: 80px; height: 80px; background-color:#008f5d; border-radius:50%;"></div> <!-- Logo placeholder -->
                 </div>
 
-                <!-- Right Box (Left in RTL) -->
-                <div class="t4-box">
-                    <div class="t4-row">
-                        <div class="t4-label">الاسم</div>
-                        <div class="t4-value">{{ cert.name }}</div>
+                <div class="t4-title-area">
+                    <div class="t4-top-center">
+                        {% if cert.photo_path %}
+                            <img src="{{ url_for('static', filename='uploads/' + cert.photo_path) }}" class="t4-photo" alt="Photo">
+                        {% else %}
+                            <div class="t4-photo"></div>
+                        {% endif %}
+                        <img src="{{ url_for('static', filename='qrcodes/' + cert.qr_path) }}" class="t4-qr" alt="QR">
                     </div>
-                    <div class="t4-row">
-                        <div class="t4-label">رقم الهوية</div>
-                        <div class="t4-value">{{ cert.id_number }}</div>
+                    <div class="t4-title">شهادة صحية</div>
+                </div>
+
+                <div class="t4-body-container">
+                    <!-- Left Box (Right in RTL) -->
+                    <div class="t4-box">
+                        <div class="t4-row"><div class="t4-label">رقم الشهادة</div><div class="t4-value">{{ cert.cert_number }}</div></div>
+                        <div class="t4-row"><div class="t4-label">مكان الإصدار</div><div class="t4-value">{{ cert.place_of_issue }}</div></div>
+                        <div class="t4-row"><div class="t4-label">نهاية الصلاحية</div><div class="t4-value">{{ cert.expiry_date }}</div></div>
                     </div>
-                    <div class="t4-row">
-                        <div class="t4-label">الجنس</div>
-                        <div class="t4-value">{{ cert.gender }}</div>
-                    </div>
-                    <div class="t4-row">
-                        <div class="t4-label">الجنسية</div>
-                        <div class="t4-value">{{ cert.nationality }}</div>
-                    </div>
-                    <div class="t4-row">
-                        <div class="t4-label">المهنة</div>
-                        <div class="t4-value">{{ cert.profession }}</div>
+                    
+                    <!-- Right Box (Left in RTL) -->
+                    <div class="t4-box">
+                        <div class="t4-row"><div class="t4-label">الاسم</div><div class="t4-value">{{ cert.name }}</div></div>
+                        <div class="t4-row"><div class="t4-label">رقم الهوية</div><div class="t4-value">{{ cert.id_number }}</div></div>
+                        <div class="t4-row"><div class="t4-label">الجنس</div><div class="t4-value">{{ cert.gender }}</div></div>
+                        <div class="t4-row"><div class="t4-label">الجنسية</div><div class="t4-value">{{ cert.nationality }}</div></div>
+                        <div class="t4-row"><div class="t4-label">المهنة</div><div class="t4-value">{{ cert.profession }}</div></div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Back Page for Riyadh -->
-        <div class="page t4-back-page">
-            <ul class="t4-back-list">
-                <li>حامل هذه الشهادة حاصل على تقرير طبي يثبت خلوه من الامراض المعدية وأجريت له التحصينات التي تخوله
-                    للعمل في محلات الاغذية والصحة العامة</li>
-                <li>تشغيل عمال ليس لديهم شهادات صحية أو لديهم شهادات صحية منتهية يعاقب عليها النظام بغرامة مالية عن كل
-                    عامل</li>
-                <li>تجدد هذه الشهادة قبل انتهائها بثلاثين يوماً</li>
-                <li>لا تعتبر هذه الشهادة اثبات هوية لحاملها</li>
-                <li>للتأكد من سلامة الشهادة يرجى زيارة موقع أمانة منطقة الرياض</li>
-            </ul>
-        </div>
+            <!-- Back Page for Riyadh -->
+            <div class="page t4-back-page">
+                <ul class="t4-back-list">
+                    <li>حامل هذه الشهادة حاصل على تقرير طبي يثبت خلوه من الامراض المعدية وأجريت له التحصينات التي تخوله للعمل في محلات الاغذية والصحة العامة</li>
+                    <li>تشغيل عمال ليس لديهم شهادات صحية أو لديهم شهادات صحية منتهية يعاقب عليها النظام بغرامة مالية عن كل عامل</li>
+                    <li>تجدد هذه الشهادة قبل انتهائها بثلاثين يوماً</li>
+                    <li>لا تعتبر هذه الشهادة اثبات هوية لحاملها</li>
+                    <li>للتأكد من سلامة الشهادة يرجى زيارة موقع أمانة منطقة الرياض</li>
+                </ul>
+            </div>
         {% endif %}
 
     </div>
 
+    <script>
+        function handlePrint() {
+            window.print();
+        }
+    </script>
 </body>
-
 </html>

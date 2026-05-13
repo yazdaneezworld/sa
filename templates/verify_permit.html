@@ -1,103 +1,298 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التحقق من تصريح الدخول</title>
+    <title>تحقق من التصريح - توكلنا</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background: linear-gradient(135deg, #065f46 0%, #064e3b 100%); min-height: 100vh; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-bg {
+            background-color: #1a1a1a;
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .permit-card {
+            background-image: url("{{ url_for('static', filename='images/kaaba_sketch.png') }}");
+            background-size: 104% 106%;
+            background-position: center;
+            border-radius: 25px;
+            aspect-ratio: 1.6 / 1;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 8px solid #15a4c4;
+            /* Blue border like in template */
+        }
+
+        .user-photo {
+            position: absolute;
+            top: 18%;
+            right: 6%;
+            width: 24%;
+            height: 48%;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Barcode container */
+        .barcode-container {
+            position: absolute;
+            top: 7%;
+            left: 5%;
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .barcode-box {
+            width: 100%;
+            height: 24px;
+            background: repeating-linear-gradient(90deg, #000, #000 2px, transparent 2px, transparent 4px, #000 4px, #000 5px, transparent 5px, transparent 8px, #000 8px, #000 12px, transparent 12px, transparent 14px);
+            opacity: 0.9;
+        }
+
+        .card-data-overlay {
+            position: absolute;
+            top: 25%;
+            left: 8%;
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-field {
+            margin-bottom: 2px;
+        }
+
+        .card-label {
+            font-size: 7px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .card-value {
+            font-size: 10px;
+            font-weight: 800;
+            color: #000;
+            line-height: 1;
+        }
+
+        .details-box {
+            background-color: #f8fafc;
+            border-radius: 20px;
+            padding: 24px;
+            margin-top: 25px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .detail-label {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .detail-value {
+            color: #1e293b;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .detail-value-blue {
+            color: #2563eb;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .footer-text {
+            color: #94a3b8;
+            font-size: 10px;
+            line-height: 1.4;
+            text-align: right;
+        }
     </style>
 </head>
-<body class="flex items-center justify-center p-4 py-10">
-    <div class="w-full max-w-lg">
-        <!-- Header Badge -->
-        <div class="text-center mb-4">
-            <div class="inline-flex items-center gap-2 bg-green-500 text-white px-5 py-2 rounded-full font-bold text-sm shadow-lg">
-                ✅ وثيقة مُتحقق منها
-            </div>
+
+<body class="bg-white pb-10">
+
+    <!-- Header Section -->
+    <div class="header-bg py-5 px-6 flex justify-between items-center text-white sticky top-0 z-50">
+        <div class="flex items-center">
+            <img src="{{ url_for('static', filename='images/tawakkalna_logos.png') }}" class="h-12" alt="Logos">
         </div>
-
-        <!-- Card -->
-        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <!-- Top colored bar -->
-            <div class="bg-gradient-to-l from-green-700 to-green-600 px-6 py-5 text-white">
-                <div class="text-xs font-medium opacity-80 mb-1">تصريح دخول مكة المكرمة</div>
-                <div class="text-xl font-extrabold">{{ permit.name }}</div>
-                <div class="text-sm opacity-80 mt-1">رقم التصريح: {{ permit.permit_number }}</div>
-            </div>
-
-            <!-- Photo + Details -->
-            <div class="p-6">
-                <div class="flex gap-5 mb-6">
-                    <!-- Photo -->
-                    <div class="flex-shrink-0">
-                        {% if permit.photo_path %}
-                        <img class="h-28 w-22 object-cover rounded-xl border-2 border-green-200 shadow"
-                            src="{{ url_for('static', filename='uploads/' + permit.photo_path) }}" alt="صورة المستفيد">
-                        {% else %}
-                        <div class="h-28 w-20 bg-gray-100 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-400 text-xs text-center">
-                            لا توجد<br>صورة
-                        </div>
-                        {% endif %}
-                    </div>
-                    <!-- Key info -->
-                    <div class="flex-1 space-y-2">
-                        <div class="flex justify-between text-sm border-b pb-2">
-                            <span class="text-gray-500">رقم الهوية</span>
-                            <span class="font-bold text-gray-800">{{ permit.id_number }}</span>
-                        </div>
-                        <div class="flex justify-between text-sm border-b pb-2">
-                            <span class="text-gray-500">الجنسية</span>
-                            <span class="font-medium text-gray-800">{{ permit.nationality }}</span>
-                        </div>
-                        <div class="flex justify-between text-sm border-b pb-2">
-                            <span class="text-gray-500">الجنس</span>
-                            <span class="font-medium text-gray-800">{{ permit.gender }}</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-500">الشركة</span>
-                            <span class="font-medium text-gray-800 text-left max-w-[170px] truncate">{{ permit.company }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
-                    {% if permit.purpose %}
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">الغرض</span>
-                        <span class="font-medium text-gray-700">{{ permit.purpose }}</span>
-                    </div>
-                    {% endif %}
-                    {% if permit.authority %}
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">جهة الموافقة</span>
-                        <span class="font-medium text-gray-700">{{ permit.authority }}</span>
-                    </div>
-                    {% endif %}
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">تاريخ الإصدار</span>
-                        <span class="font-bold text-green-700">{{ permit.issue_date }}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">تاريخ الانتهاء</span>
-                        <span class="font-bold text-red-600">{{ permit.expiry_date }}</span>
-                    </div>
-                </div>
-
-                {% if permit.purpose_desc %}
-                <div class="mt-4 bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-800 text-center">
-                    {{ permit.purpose_desc }}
-                </div>
-                {% endif %}
-            </div>
-
-            <!-- Footer -->
-            <div class="bg-gray-50 border-t px-6 py-3 text-center text-xs text-gray-400">
-                تم التحقق من الوثيقة إلكترونياً عبر النظام الرسمي
-            </div>
+        <div class="text-left">
+            <h1 class="text-base font-extrabold tracking-tight">تصريح دخول مكة</h1>
+            <p class="text-[10px] font-medium opacity-70 uppercase tracking-widest">Makkah Entry Permit</p>
         </div>
     </div>
+
+    <div class="max-w-md mx-auto p-5 mt-4">
+
+        <!-- The Card Section -->
+        <div class="card-container mb-8">
+            <div class="permit-card">
+
+
+                <!-- Barcode -->
+                <div class="barcode-container">
+                    <div class="barcode-box"></div>
+                    <div class="text-[8px] font-bold text-black mt-1 tracking-widest">{{ permit.permit_number }}</div>
+                </div>
+
+                <!-- Photo -->
+                <img src="{{ url_for('static', filename='uploads/' + permit.photo_path) }}" class="user-photo"
+                    alt="Photo">
+
+                <!-- Below Photo Data -->
+                <div class="absolute top-[67%] right-[6%] w-[24%] flex flex-col items-center gap-[2px]">
+                    <div class="text-center">
+                        <div class="card-label mb-[1px]">رقم التصريح/ Permit ID</div>
+                        <div class="text-[10px] font-extrabold text-black">{{ permit.permit_number }}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="card-label mb-[1px]">مواقع التصريح/ Permit Sites</div>
+                        <div class="text-[10px] font-extrabold text-black">المنطقة المركزية</div>
+                    </div>
+                </div>
+
+                <!-- Hijri Year Bottom Left -->
+                <div class="absolute bottom-[8%] left-[8%]">
+                    <span class="text-sm font-extrabold text-black">1447 هـ</span>
+                </div>
+
+                <!-- Data Overlay -->
+                <div class="card-data-overlay">
+                    <div class="mb-2">
+                        <div class="card-label">الاسم/ Name</div>
+                        <div class="card-value text-sm">{{ permit.name }}</div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-y-3">
+                        <div>
+                            <div class="card-label">الجنسية/ Nationality</div>
+                            <div class="card-value">{{ permit.nationality }}</div>
+                        </div>
+                        <div>
+                            <div class="card-label">الهوية/ ID</div>
+                            <div class="card-value">{{ permit.id_number }}</div>
+                        </div>
+
+                        <div class="col-span-2">
+                            <div class="card-label">نوع التصريح/ Permit Type</div>
+                            <div class="card-value">دخول مكة MakkahEntry</div>
+                        </div>
+
+                        <div>
+                            <div class="card-label">الجنس/ Gender</div>
+                            <div class="card-value">{{ permit.gender }}</div>
+                        </div>
+                        <div>
+                            <div class="card-label">تاريخ الميلاد/ Date of Birth</div>
+                            <div class="card-value">{{ permit.dob }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer Small Text -->
+                <div class="absolute bottom-3 left-0 right-0 text-center px-4">
+                    <p class="text-[6px] text-gray-400 font-bold leading-tight">
+                        تصريح دخول أصدر من المنصة الموحدة لتصاريح الحج تحت إشراف لجنة الحج العليا
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Section (The Gray Box) -->
+        <div class="details-box">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6">
+
+                <div class="border-b border-gray-100 pb-3">
+                    <div class="detail-label">Name in Arabic / الاسم</div>
+                    <div class="detail-value">{{ permit.name }}</div>
+                </div>
+
+                <div class="border-b border-gray-100 pb-3">
+                    <div class="detail-label">Name / الاسم بالإنجليزي</div>
+                    <div class="detail-value-blue">{{ permit.name }}</div>
+                </div>
+
+                <div class="border-b border-gray-100 pb-3">
+                    <div class="detail-label">Id / الهوية</div>
+                    <div class="detail-value">{{ permit.id_number }}</div>
+                </div>
+
+                <div class="border-b border-gray-100 pb-3">
+                    <div class="detail-label">Nationality in Arabic / الجنسية</div>
+                    <div class="detail-value">{{ permit.nationality }}</div>
+                </div>
+
+                <div class="border-b border-gray-100 pb-3">
+                    <div class="detail-label">Nationality / الجنسية بالإنجليزي</div>
+                    <div class="detail-value">{{ permit.nationality }}</div>
+                </div>
+
+                <div class="border-b border-gray-100 pb-3">
+                    <div class="detail-label">Gender in Arabic / الجنس</div>
+                    <div class="detail-value">{{ permit.gender }}</div>
+                </div>
+
+                <div class="border-b border-gray-100 pb-3">
+                    <div class="detail-label">Gender / الجنس بالإنجليزي</div>
+                    <div class="detail-value-blue">{{ permit.gender }}</div>
+                </div>
+
+                <div class="border-b border-gray-100 pb-3">
+                    <div class="detail-label">Date of Birth / تاريخ الميلاد</div>
+                    <div class="detail-value">{{ permit.dob }}</div>
+                </div>
+
+                <div class="col-span-1 md:col-span-2 pt-2">
+                    <div class="detail-label">Permit ID / رقم التصريح</div>
+                    <div class="detail-value">{{ permit.permit_number }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Realtime Verification Footer -->
+        <div class="mt-12 flex flex-col items-center">
+            <div class="flex justify-between w-full items-end border-t pt-8 border-gray-100">
+                <div class="footer-text">
+                    <p class="font-bold text-gray-500 mb-1">تم مشاركة هذه الوثيقة من خلال توكلنا</p>
+                    <p class="opacity-70 uppercase tracking-tighter">This document is shared through Tawakkalna</p>
+                </div>
+                <div class="bg-white p-2 rounded-xl shadow-sm border border-gray-50">
+                    <img src="{{ url_for('static', filename='qrcodes/' + permit.qr_path) }}" class="w-20 h-20"
+                        alt="QR Verification">
+                </div>
+            </div>
+
+            <div class="mt-10 opacity-30">
+                <img src="{{ url_for('static', filename='images/vision2030.png') }}" class="h-8 grayscale"
+                    alt="Vision 2030">
+            </div>
+        </div>
+
+    </div>
+
 </body>
+
 </html>
