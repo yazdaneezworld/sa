@@ -360,31 +360,6 @@ with app.app_context():
         db.session.commit()
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    with app.app_context():
-        db.create_all()
-        # Automatic DB migration
-        try:
-            import sqlite3
-            db_path = os.path.join(app.instance_path, 'database.db')
-            if os.path.exists(db_path):
-                conn = sqlite3.connect(db_path)
-                cursor = conn.cursor()
-                cursor.execute("PRAGMA table_info(permit)")
-                cols = [c[1] for c in cursor.fetchall()]
-                if 'dob' not in cols:
-                    cursor.execute("ALTER TABLE permit ADD COLUMN dob VARCHAR(20)")
-                    conn.commit()
-                conn.close()
-        except Exception as e:
-            print(f"Migration error: {e}")
-
-        if not Admin.query.filter_by(username='admin').first():
-            hashed_pw = generate_password_hash('admin123')
-            default_admin = Admin(username='admin', password=hashed_pw)
-            db.session.add(default_admin)
-            db.session.commit()
-
 
     import logging
     log = logging.getLogger('werkzeug')
