@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
+<<<<<<< HEAD
         body {
             font-family: 'Tajawal', sans-serif;
             background-color: #ffffff;
@@ -19,26 +20,46 @@
             background-color: #1a1a1a;
         }
 
+=======
+        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; margin: 0; padding: 0; }
+        .header-bg { background-color: #1a1a1a; }
+        
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
         .card-container {
             width: 100%;
             max-width: 500px;
             margin: 0 auto;
             position: relative;
         }
+<<<<<<< HEAD
 
         .permit-card {
             background-image: url("{{ url_for('static', filename='images/kaaba_sketch.png') }}");
             background-size: 104% 106%;
+=======
+        
+        .permit-card {
+            background-image: url("{{ url_for('static', filename='images/kaaba_sketch.png') }}");
+            background-size: cover;
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
             background-position: center;
             border-radius: 25px;
             aspect-ratio: 1.6 / 1;
             position: relative;
+<<<<<<< HEAD
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             border: 8px solid #15a4c4;
             /* Blue border like in template */
         }
 
+=======
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            overflow: hidden;
+            border: 8px solid #4fd1ed; /* Blue border like in template */
+        }
+        
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
         .user-photo {
             position: absolute;
             top: 18%;
@@ -48,6 +69,7 @@
             border-radius: 12px;
             object-fit: cover;
             border: 2px solid #fff;
+<<<<<<< HEAD
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
@@ -67,6 +89,20 @@
             height: 24px;
             background: repeating-linear-gradient(90deg, #000, #000 2px, transparent 2px, transparent 4px, #000 4px, #000 5px, transparent 5px, transparent 8px, #000 8px, #000 12px, transparent 12px, transparent 14px);
             opacity: 0.9;
+=======
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Barcode placeholder */
+        .barcode-box {
+            position: absolute;
+            top: 10%;
+            left: 6%;
+            width: 20%;
+            height: 8%;
+            background: linear-gradient(90deg, #000 10%, transparent 10%, transparent 20%, #000 20%, #000 40%, transparent 40%, transparent 50%, #000 50%, #000 60%, transparent 60%, transparent 70%, #000 70%, #000 90%, transparent 90%);
+            opacity: 0.8;
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
         }
 
         .card-data-overlay {
@@ -79,6 +115,7 @@
             gap: 4px;
         }
 
+<<<<<<< HEAD
         .card-field {
             margin-bottom: 2px;
         }
@@ -96,11 +133,18 @@
             line-height: 1;
         }
 
+=======
+        .card-field { margin-bottom: 2px; }
+        .card-label { font-size: 7px; color: #555; font-weight: bold; }
+        .card-value { font-size: 10px; font-weight: 800; color: #000; line-height: 1; }
+        
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
         .details-box {
             background-color: #f8fafc;
             border-radius: 20px;
             padding: 24px;
             margin-top: 25px;
+<<<<<<< HEAD
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
         }
 
@@ -122,6 +166,14 @@
             font-size: 15px;
             font-weight: 700;
         }
+=======
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        
+        .detail-label { color: #94a3b8; font-size: 11px; font-weight: 500; margin-bottom: 2px; }
+        .detail-value { color: #1e293b; font-size: 15px; font-weight: 700; }
+        .detail-value-blue { color: #2563eb; font-size: 15px; font-weight: 700; }
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
 
         .footer-text {
             color: #94a3b8;
@@ -131,7 +183,10 @@
         }
     </style>
 </head>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
 <body class="bg-white pb-10">
 
     <!-- Header Section -->
@@ -146,6 +201,7 @@
     </div>
 
     <div class="max-w-md mx-auto p-5 mt-4">
+<<<<<<< HEAD
 
         <!-- The Card Section -->
         <div class="card-container mb-8">
@@ -179,13 +235,29 @@
                     <span class="text-sm font-extrabold text-black">1447 هـ</span>
                 </div>
 
+=======
+        
+        <!-- The Card Section -->
+        <div class="card-container mb-8">
+            <div class="permit-card">
+                <!-- Barcode -->
+                <div class="barcode-box"></div>
+                
+                <!-- Photo -->
+                <img src="{{ url_for('static', filename='uploads/' + permit.photo_path) }}" class="user-photo" alt="Photo">
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <!-- Data Overlay -->
                 <div class="card-data-overlay">
                     <div class="mb-2">
                         <div class="card-label">الاسم/ Name</div>
                         <div class="card-value text-sm">{{ permit.name }}</div>
                     </div>
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                     <div class="grid grid-cols-2 gap-y-3">
                         <div>
                             <div class="card-label">الجنسية/ Nationality</div>
@@ -195,12 +267,20 @@
                             <div class="card-label">الهوية/ ID</div>
                             <div class="card-value">{{ permit.id_number }}</div>
                         </div>
+<<<<<<< HEAD
 
+=======
+                        
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                         <div class="col-span-2">
                             <div class="card-label">نوع التصريح/ Permit Type</div>
                             <div class="card-value">دخول مكة MakkahEntry</div>
                         </div>
+<<<<<<< HEAD
 
+=======
+                        
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                         <div>
                             <div class="card-label">الجنس/ Gender</div>
                             <div class="card-value">{{ permit.gender }}</div>
@@ -209,9 +289,20 @@
                             <div class="card-label">تاريخ الميلاد/ Date of Birth</div>
                             <div class="card-value">{{ permit.dob }}</div>
                         </div>
+<<<<<<< HEAD
                     </div>
                 </div>
 
+=======
+                        
+                        <div class="col-span-2">
+                            <div class="card-label">رقم التصريح/ Permit ID</div>
+                            <div class="card-value">{{ permit.permit_number }}</div>
+                        </div>
+                    </div>
+                </div>
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <!-- Card Footer Small Text -->
                 <div class="absolute bottom-3 left-0 right-0 text-center px-4">
                     <p class="text-[6px] text-gray-400 font-bold leading-tight">
@@ -224,47 +315,83 @@
         <!-- Details Section (The Gray Box) -->
         <div class="details-box">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6">
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="border-b border-gray-100 pb-3">
                     <div class="detail-label">Name in Arabic / الاسم</div>
                     <div class="detail-value">{{ permit.name }}</div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="border-b border-gray-100 pb-3">
                     <div class="detail-label">Name / الاسم بالإنجليزي</div>
                     <div class="detail-value-blue">{{ permit.name }}</div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="border-b border-gray-100 pb-3">
                     <div class="detail-label">Id / الهوية</div>
                     <div class="detail-value">{{ permit.id_number }}</div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="border-b border-gray-100 pb-3">
                     <div class="detail-label">Nationality in Arabic / الجنسية</div>
                     <div class="detail-value">{{ permit.nationality }}</div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="border-b border-gray-100 pb-3">
                     <div class="detail-label">Nationality / الجنسية بالإنجليزي</div>
                     <div class="detail-value">{{ permit.nationality }}</div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="border-b border-gray-100 pb-3">
                     <div class="detail-label">Gender in Arabic / الجنس</div>
                     <div class="detail-value">{{ permit.gender }}</div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="border-b border-gray-100 pb-3">
                     <div class="detail-label">Gender / الجنس بالإنجليزي</div>
                     <div class="detail-value-blue">{{ permit.gender }}</div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="border-b border-gray-100 pb-3">
                     <div class="detail-label">Date of Birth / تاريخ الميلاد</div>
                     <div class="detail-value">{{ permit.dob }}</div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
                 <div class="col-span-1 md:col-span-2 pt-2">
                     <div class="detail-label">Permit ID / رقم التصريح</div>
                     <div class="detail-value">{{ permit.permit_number }}</div>
@@ -280,6 +407,7 @@
                     <p class="opacity-70 uppercase tracking-tighter">This document is shared through Tawakkalna</p>
                 </div>
                 <div class="bg-white p-2 rounded-xl shadow-sm border border-gray-50">
+<<<<<<< HEAD
                     <img src="{{ url_for('static', filename='qrcodes/' + permit.qr_path) }}" class="w-20 h-20"
                         alt="QR Verification">
                 </div>
@@ -288,6 +416,14 @@
             <div class="mt-10 opacity-30">
                 <img src="{{ url_for('static', filename='images/vision2030.png') }}" class="h-8 grayscale"
                     alt="Vision 2030">
+=======
+                    <img src="{{ url_for('static', filename='qrcodes/' + permit.qr_path) }}" class="w-20 h-20" alt="QR Verification">
+                </div>
+            </div>
+            
+            <div class="mt-10 opacity-30">
+                <img src="{{ url_for('static', filename='images/vision2030.png') }}" class="h-8 grayscale" alt="Vision 2030">
+>>>>>>> 35969f07d5e6e0b6e35d4efdbf9fd6978ee5af3f
             </div>
         </div>
 
